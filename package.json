@@ -1,0 +1,54 @@
+{
+  "name": "@anand/tiptap-visual-diff",
+  "version": "0.1.0",
+  "description": "ProseMirror decoration-based visual diff extension for Tiptap v3. Compares editor content against a reference document and highlights additions, removals, and modifications inline — without touching the actual document content.",
+  "license": "MIT",
+  "author": "Anand",
+  "keywords": [
+    "tiptap",
+    "tiptap-extension",
+    "diff",
+    "visual-diff",
+    "compare",
+    "prosemirror",
+    "rich-text-editor",
+    "track-changes"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@tiptap/core": "^3.0.0",
+    "@tiptap/pm": "^3.0.0",
+    "diff": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "diff": {
+      "optional": false
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anand/tiptap-visual-diff"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
