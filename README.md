@@ -1,4 +1,4 @@
-# @anand/tiptap-visual-diff
+# @anandanair/tiptap-visual-diff
 
 A Tiptap v3 extension that provides real-time **visual diffs** by comparing the editor's current content against a reference document. Highlights additions, removals, and modifications using **ProseMirror decorations** — the actual document content stays clean.
 
@@ -18,7 +18,7 @@ A Tiptap v3 extension that provides real-time **visual diffs** by comparing the 
 ## Installation
 
 ```bash
-npm install @anand/tiptap-visual-diff
+npm install @anandanair/tiptap-visual-diff
 ```
 
 This package requires the following peer dependencies (install them if you haven't already):
@@ -32,10 +32,15 @@ npm install @tiptap/core @tiptap/pm diff
 ```ts
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
-import { ComparePlugin } from "@anand/tiptap-visual-diff";
+import { ComparePlugin } from "@anandanair/tiptap-visual-diff";
 
 // Parse your original/reference content to Tiptap JSON
-const originalJSON = { type: "doc", content: [/* ... */] };
+const originalJSON = {
+  type: "doc",
+  content: [
+    /* ... */
+  ],
+};
 
 const editor = new Editor({
   extensions: [
@@ -56,7 +61,7 @@ editor.commands.setComparisonContent(newOriginalJSON);
 ```tsx
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { ComparePlugin } from "@anand/tiptap-visual-diff";
+import { ComparePlugin } from "@anandanair/tiptap-visual-diff";
 
 function DiffEditor({ originalJSON, proposedMarkdown, onSave }) {
   const editor = useEditor({
@@ -97,32 +102,32 @@ function parseMarkdownToJSON(markdown: string) {
 
 ### `ComparePlugin.configure(options)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `comparisonContent` | `Record<string, any> \| null` | `null` | The Tiptap JSON document to compare against |
+| Option              | Type                          | Default | Description                                 |
+| ------------------- | ----------------------------- | ------- | ------------------------------------------- |
+| `comparisonContent` | `Record<string, any> \| null` | `null`  | The Tiptap JSON document to compare against |
 
 ### Commands
 
-| Command | Parameters | Description |
-|---------|-----------|-------------|
+| Command                | Parameters                             | Description                                                |
+| ---------------------- | -------------------------------------- | ---------------------------------------------------------- |
 | `setComparisonContent` | `content: Record<string, any> \| null` | Update the comparison target without recreating the editor |
 
 ## CSS Classes
 
 The extension applies these classes via ProseMirror decorations. **Add styles to your CSS to make diffs visible:**
 
-| Class | Applied to | Meaning |
-|-------|-----------|---------|
-| `.diff-added` | Inline text, block nodes | Content added (green background) |
-| `.diff-removed` | Widget (span/div) | Content removed (red strikethrough) |
-| `.diff-modified` | Inline text, block nodes | Content modified (amber background) |
-| `.diff-code-added` | Inline text inside code blocks | Code line added |
-| `.diff-removed-block` | Widget (div) | Entire block node removed |
-| `.diff-removed-cell` | Widget (td) | Table cell removed |
-| `.diff-removed-code-block` | Widget (pre > code) | Entire code block removed |
-| `.diff-removed-code-line` | Widget (div) | Individual code line removed |
-| `.diff-removed-image-wrapper` | Widget (div) | Image removed (container) |
-| `.diff-removed-image-overlay` | Widget (div) | Image removed (overlay text) |
+| Class                         | Applied to                     | Meaning                             |
+| ----------------------------- | ------------------------------ | ----------------------------------- |
+| `.diff-added`                 | Inline text, block nodes       | Content added (green background)    |
+| `.diff-removed`               | Widget (span/div)              | Content removed (red strikethrough) |
+| `.diff-modified`              | Inline text, block nodes       | Content modified (amber background) |
+| `.diff-code-added`            | Inline text inside code blocks | Code line added                     |
+| `.diff-removed-block`         | Widget (div)                   | Entire block node removed           |
+| `.diff-removed-cell`          | Widget (td)                    | Table cell removed                  |
+| `.diff-removed-code-block`    | Widget (pre > code)            | Entire code block removed           |
+| `.diff-removed-code-line`     | Widget (div)                   | Individual code line removed        |
+| `.diff-removed-image-wrapper` | Widget (div)                   | Image removed (container)           |
+| `.diff-removed-image-overlay` | Widget (div)                   | Image removed (overlay text)        |
 
 ### Example Styles
 
