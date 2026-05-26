@@ -12,7 +12,7 @@ A Tiptap v3 extension that provides real-time **visual diffs** by comparing the 
 - **Code-aware** — code blocks use line-level diffing; removed code lines render as individual widgets
 - **Mark-aware** — detects formatting-only changes (bold added, link removed, etc.) and highlights them as modifications
 - **Attribute-aware** — catches heading level changes and image src changes
-- **Look-ahead alignment** — handles insertions and deletions of up to 3 consecutive nodes without misalignment
+- **Look-ahead alignment** — handles insertions and deletions of up to 20 consecutive nodes without misalignment
 - **Performance** — decorations are cached and only rebuilt when the document or comparison target changes
 
 ## Installation
@@ -128,6 +128,7 @@ The extension applies these classes via ProseMirror decorations. **Add styles to
 | `.diff-removed-code-line`     | Widget (div)                   | Individual code line removed        |
 | `.diff-removed-image-wrapper` | Widget (div)                   | Image removed (container)           |
 | `.diff-removed-image-overlay` | Widget (div)                   | Image removed (overlay text)        |
+| `.diff-added code`            | Inline `<code>` elements       | Inline code within added blocks     |
 
 ### Example Styles
 
@@ -176,13 +177,29 @@ The extension applies these classes via ProseMirror decorations. **Add styles to
   font-size: 0.875rem;
   padding: 0 4px;
 }
+
+/* Inline <code> within entirely-added blocks.
+   When a block node (p, h1-h6, li) has .diff-added,
+   child <code> elements need explicit styling because
+   browser defaults block color inheritance. */
+.diff-added code {
+  background-color: rgba(16, 185, 129, 0.22);
+  color: #065f46;
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+
+.dark .diff-added code {
+  background-color: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
 ```
 
 ## How It Works
 
 1. The extension stores the `comparisonContent` as a ProseMirror plugin state
 2. When the document changes, it converts the comparison JSON into ProseMirror nodes
-3. It aligns the two node trees using a greedy look-ahead matcher (window of 3)
+3. It aligns the two node trees using a greedy look-ahead matcher (window of 20)
 4. For matched nodes, it compares text content character-by-character (or line-by-line for code blocks)
 5. Differences are rendered as ProseMirror decorations — inline spans for text changes, widgets for removed content, node decorations for added/modified blocks
 
@@ -190,7 +207,7 @@ The editor's document content is **never modified** — diffs are purely visual.
 
 ## Limitations (v0.1)
 
-- **Look-ahead window of 3**: Inserting or deleting more than 3 consecutive nodes of the same type may cause misalignment. A full LCS-based alignment is planned for a future release.
+- **Insertion/deletion cap**: The look-ahead alignment covers up to 20 consecutive nodes. Inserting or deleting more than 20 consecutive block nodes at once may cause downstream misalignment. In practice, even large content insertions rarely exceed this.
 - **No accept/reject API**: This is a visual diff tool, not a track-changes system. To accept or reject changes, edit the document directly and save.
 - **ESM only**: No CommonJS build in v0.1. Modern bundlers (Next.js, Vite, webpack 5) handle ESM natively.
 
