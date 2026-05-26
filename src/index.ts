@@ -203,6 +203,35 @@ function createRemovedNodeWidget(node: ProsemirrorNode): HTMLElement {
     return wrapper;
   }
 
+  if (node.type.name === "bulletList" || node.type.name === "taskList") {
+    const ul = document.createElement("ul");
+    ul.className = "diff-removed diff-removed-block";
+    node.forEach((child) => {
+      const li = document.createElement("li");
+      li.textContent = nodeToText(child).trimEnd();
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  if (node.type.name === "orderedList") {
+    const ol = document.createElement("ol");
+    ol.className = "diff-removed diff-removed-block";
+    node.forEach((child) => {
+      const li = document.createElement("li");
+      li.textContent = nodeToText(child).trimEnd();
+      ol.appendChild(li);
+    });
+    return ol;
+  }
+
+  if (node.type.name === "listItem" || node.type.name === "taskItem") {
+    const li = document.createElement("li");
+    li.className = "diff-removed";
+    li.textContent = nodeToText(node).trimEnd();
+    return li;
+  }
+
   const el = document.createElement("div");
   el.className = "diff-removed diff-removed-block";
   el.textContent = nodeToText(node).trimEnd();
