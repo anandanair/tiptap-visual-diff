@@ -46,7 +46,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anandanair/tiptap-visual-diff"
+    "url": "git+https://github.com/anandanair/tiptap-visual-diff.git"
   },
   "publishConfig": {
     "access": "public"
