@@ -141,7 +141,7 @@ The extension applies these classes via ProseMirror decorations. **Add styles to
 }
 
 .diff-removed {
-  background-color: rgba(239, 68, 68, 0.08);
+  background-color: rgba(239, 68, 68, 0.18);
   color: #991b1b;
   text-decoration: line-through;
   border-radius: 3px;
@@ -156,7 +156,7 @@ The extension applies these classes via ProseMirror decorations. **Add styles to
 }
 
 .diff-removed-block {
-  background-color: rgba(239, 68, 68, 0.08);
+  background-color: rgba(239, 68, 68, 0.18);
   color: #991b1b;
   text-decoration: line-through;
   border-left: 3px solid #ef4444;
@@ -170,7 +170,7 @@ The extension applies these classes via ProseMirror decorations. **Add styles to
 }
 
 .diff-removed-code-line {
-  background-color: rgba(239, 68, 68, 0.08);
+  background-color: rgba(239, 68, 68, 0.18);
   color: #991b1b;
   text-decoration: line-through;
   font-family: monospace;
