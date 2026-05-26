@@ -469,7 +469,7 @@ function alignNodes(
   const result: AlignedItem[] = [];
   let oi = 0;
   let ni = 0;
-  const LOOKAHEAD = 3;
+  const LOOKAHEAD = 20;
 
   while (oi < oldNodes.length || ni < newNodes.length) {
     if (oi >= oldNodes.length) {
