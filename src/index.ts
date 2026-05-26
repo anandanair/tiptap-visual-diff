@@ -287,7 +287,6 @@ function compareNodes(
   if (!oldNode && newNode) {
     if (nodeSize > 0) {
       if (newNode.type.name === "codeBlock") {
-        addNodeDecoration(decos, pos, end, "diff-added");
         const contentStart = pos + 1;
         const contentEnd = end - 1;
         if (contentEnd > contentStart) {
