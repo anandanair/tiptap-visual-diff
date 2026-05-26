@@ -285,7 +285,18 @@ function compareNodes(
 
   // Only new exists → node added
   if (!oldNode && newNode) {
-    if (nodeSize > 0) addNodeDecoration(decos, pos, end, "diff-added");
+    if (nodeSize > 0) {
+      if (newNode.type.name === "codeBlock") {
+        addNodeDecoration(decos, pos, end, "diff-added");
+        const contentStart = pos + 1;
+        const contentEnd = end - 1;
+        if (contentEnd > contentStart) {
+          addInlineDecoration(decos, contentStart, contentEnd, "diff-code-added");
+        }
+      } else {
+        addNodeDecoration(decos, pos, end, "diff-added");
+      }
+    }
     return end;
   }
 
