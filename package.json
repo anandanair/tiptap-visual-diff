@@ -1,6 +1,6 @@
 {
   "name": "@anandanair/tiptap-visual-diff",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "ProseMirror decoration-based visual diff extension for Tiptap v3. Compares editor content against a reference document and highlights additions, removals, and modifications inline — without touching the actual document content.",
   "license": "MIT",
   "author": "Anand",

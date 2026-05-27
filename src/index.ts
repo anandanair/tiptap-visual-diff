@@ -439,7 +439,42 @@ function compareNodes(
 
     case "bulletList":
     case "orderedList":
-    case "taskList":
+    case "taskList": {
+      const oldChildren: ProsemirrorNode[] = [];
+      oldNode.forEach((child) => {
+        oldChildren.push(child);
+      });
+
+      const newChildren: ProsemirrorNode[] = [];
+      newNode.forEach((child) => {
+        newChildren.push(child);
+      });
+
+      const aligned = alignNodes(oldChildren, newChildren);
+      let childPos = pos + 1;
+
+      for (const item of aligned) {
+        if ("oldNode" in item) {
+          childPos = compareNodes(
+            item.oldNode,
+            item.newNode,
+            childPos,
+            state,
+            decos,
+          );
+        } else if ("removed" in item) {
+          compareNodes(item.node, null, childPos, state, decos);
+        } else {
+          childPos = compareNodes(null, item.node, childPos, state, decos);
+        }
+      }
+      return end;
+    }
+
+    // Table children (rows in table, cells in row) use positional
+    // alignment — index 0 matches index 0, etc. Text-similarity
+    // matching would misclassify a row whose content changed as
+    // "entirely added", turning every cell green via tr.diff-added td.
     case "table":
     case "tableRow": {
       const oldChildren: ProsemirrorNode[] = [];
@@ -452,7 +487,20 @@ function compareNodes(
         newChildren.push(child);
       });
 
-      const aligned = alignNodes(oldChildren, newChildren);
+      const aligned: AlignedItem[] = [];
+      const maxLen = Math.max(oldChildren.length, newChildren.length);
+      for (let i = 0; i < maxLen; i++) {
+        const oldChild = oldChildren[i];
+        const newChild = newChildren[i];
+        if (oldChild && newChild) {
+          aligned.push({ oldNode: oldChild, newNode: newChild });
+        } else if (oldChild) {
+          aligned.push({ removed: true, node: oldChild });
+        } else {
+          aligned.push({ added: true, node: newChild! });
+        }
+      }
+
       let childPos = pos + 1;
 
       for (const item of aligned) {
